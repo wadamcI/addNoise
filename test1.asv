@@ -75,5 +75,8 @@ end
 
 B = Central_Difference_Matrix(50);
 B_T = B';
-
-d = inv(B_T;
+B = Central_Difference_Matrix(50);
+B_T = B';
+G = inv(B*B_T);
+d = B_T*G*(subsets2{1}^2);
+disp(subsets1{1})
