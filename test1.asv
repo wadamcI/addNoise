@@ -1,0 +1,79 @@
+n = 5;   % number of points
+
+D2 = Central_Difference_Matrix(n);
+clc
+
+%acceleration
+acceleration = linspace(1, 20, 50);
+
+
+%dt
+time = linspace(0, 5, 50);
+
+disp(time);
+
+
+% m = 2h+1
+h=1;
+m=2*h+1;
+subsets1 = cell(1, length(acceleration));
+subsets2 = cell(1, length(acceleration));
+
+% Loop through each center point
+for i = 1:length(acceleration)
+    % Determine the starting and ending indices of the subset
+    start_index = max(1, i -h);
+    end_index = min(length(acceleration), i + h);
+    
+    % subsets
+    subset = acceleration(start_index:end_index);
+
+    delta_t = time(end_index)-time(start_index);
+    
+    % Check if padding with zeros is required
+    if length(subset) < m
+       % Check for side of padding, it only works if len(acceleration)>m
+        if i<m/2
+            left_padding = floor(m - length(subset));
+            right_padding=0;
+        end
+
+        if i>m/2
+            right_padding = floor(m - length(subset));
+            left_padding =0;
+        end
+
+
+        % Pad with zeros
+        subset1 = [zeros(1, left_padding), subset, zeros(1, right_padding)];
+      
+    end
+    %subtract mean
+
+
+
+    %store
+    subsets1{i} = subset;
+    subsets2{i} = delta_t;
+    %disp(subsets1);
+end
+
+% for i = 1:length(time)
+% 
+% end
+% subsets = subsets2';
+% fprintf('%s\n', 'Cell array:');
+% fprintf('%s\n', '-----------');
+% for i = 1:size(subsets, 1)
+%     for j = 1:size(subsets, 2)
+%         fprintf('%s\t', num2str(subsets{i, j}));
+%     end
+%     fprintf('\n');
+% end
+
+%doing it without subtracting
+
+B = Central_Difference_Matrix(50);
+B_T = B';
+
+d = inv(B_T;
